@@ -1,0 +1,66 @@
+/*
+*
+* Advanced C Programming Masterclass: Pointers & Memory in C
+*
+* @theme Counting Arrays - Part#2 - Pratice Exercices Function
+* @brief Function - FindDominantValue
+* @author Vlad Budnitski
+* @date 22/03/2023
+*
+*/
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define SIZE 5
+
+
+int FreqAsValue(int *array, int sizeArray)
+{
+    int* countArray;
+    int i;
+
+    countArray = (int*)calloc((sizeArray+1), sizeof(int));
+    
+
+    // bulding the counting array
+    for (i = 0; i < sizeArray; i++)
+        countArray[array[i]]++;
+
+    // Search for a "dominant value"
+    for (i = 0; i <= sizeArray; i++)
+    {
+        if (countArray[i] > sizeArray / 2)
+        {
+            free(countArray);
+            return i;
+        }
+            
+    }
+        
+    // no dominante value found
+    free(countArray);
+    return -1;
+}
+
+int main()
+{
+    int array1[SIZE] = { 3,5,4,3,3};
+    int array2[SIZE] = { 3,5,4,2,3 };
+    int result1, result2;
+
+    printf("Dominant value Array 1\n"); 
+    result1 = FreqAsValue(array1, SIZE);
+    printf("Output of the Array 1 --> %d!\n", result1);
+
+    printf("\nDominant value Array 2\n");
+  
+    result2 = FreqAsValue(array2, SIZE);
+    printf("Output of the Array 2 --> %d!\n", result2);
+
+    return 0;
+}
