@@ -1,0 +1,59 @@
+/*
+*
+* Advanced C Programming Masterclass: Pointers & Memory in C
+*
+* @theme Counting Arrays - Part#2 - Pratice Exercices Function
+* @brief Function - FindLargestMissingValue
+* @author Vlad Budnitski
+* @date 24/03/2023
+*
+*/
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define SIZE 7
+
+
+int FindLargestMissingValue(int *array, int sizeArray)
+{
+    int i;
+    int *countArray;
+
+    countArray = (int*)calloc((sizeArray + 1), sizeof(int));
+
+    // bulding the countArray
+    for (i = 0; i < sizeArray; i++)
+        countArray[array[i]]++;
+    
+    for (i = sizeArray; i >= 0; i--)
+    {
+        if (countArray[i] == 0) //if no instances...
+        {
+            free(countArray);
+            return i;
+        }
+    }
+}
+
+int main()
+{
+    int array1[SIZE] = {2,1,3,2,4,2,7};
+    int array2[SIZE] = { 2,1,2,4,5,6,7};
+    int result1, result2;
+
+    printf("Dominant value Array 1\n"); 
+    result1 = FindLargestMissingValue(array1, SIZE);
+    printf("Output of the Array 1 --> %d!\n", result1);
+
+    printf("\nDominant value Array 2\n");
+  
+    result2 = FindLargestMissingValue(array2, SIZE);
+    printf("Output of the Array 2 --> %d!\n", result2);
+
+    return 0;
+}
