@@ -1,0 +1,86 @@
+/*
+*
+* Advanced C Programming Masterclass: Pointers & Memory in C
+*
+* @theme Counting Arrays - Part#2 - Pratice Exercices Function
+* @brief Function - areAllCharactersIncluded
+* @author Vlad Budnitski
+* @date 24/03/2023
+*
+*/
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define SIZE 7
+
+
+int areAllCharactersIncluded(char *seq1,int size1, char *seq2,int size2)
+{
+    int i;
+    int countArray[26] = {0};
+
+    // bulding the countArray for all characteres in seq2
+    for (i = 0; i < size2; i++)
+        countArray[seq2[i] - 'a']++;
+
+    //removing all appearances off all characters in seq1
+    for (i = 0; i < size1; i++)
+        countArray[seq1[i] - 'a']--;
+
+    //looking is there´s any negative number to indicate
+    // that not charateres of seq1 are inclued in seq2
+    for (i = 0; i < 26; i++)
+    {
+        if (countArray[i] < 0)
+            return 0;
+    }
+   
+    return 1;
+}
+
+int areAllCharactersIncludedOptimized(char* seq1, int size1, char* seq2, int size2)
+{
+    int i;
+    int countArray[26] = { 0 };
+
+    // bulding the countArray for all characteres in seq2
+    for (i = 0; i < size2; i++)
+        countArray[seq2[i] - 'a']++;
+
+    //removing all appearances off all characters in seq1
+    // AND
+    //looking is there´s any negative number to indicate
+    // that not charateres of seq1 are inclued in seq2
+    for (i = 0; i < size1; i++)
+    {
+        countArray[seq1[i] - 'a']--;
+        if (countArray[i] < 0)
+            return 0;
+    }
+       
+    return 1;
+}
+
+int main()
+{
+    char array1[4] = {'l','o','l'};
+    char array2[5] = "lord";
+    int sizeArray1 = strlen(array1);
+    int sizeArray2 = strlen(array2);
+    
+    int result1;
+
+    printf("Are All Characters Included\n"); 
+    result1 = areAllCharactersIncluded(array1, sizeArray1, array2, sizeArray2);
+    if(result1==1)
+        printf("Yes, they are ALL inclued\n");
+    else
+        printf("NO, they are NOT ALL inclued\n");
+
+    return 0;
+}
